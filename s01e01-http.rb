@@ -1,4 +1,6 @@
 require 'net/http'
 
 uri = URI('http://gb.ru')
-puts Net::HTTP.get(uri)
+res = Net::HTTP.get_response(uri)
+puts res.body
+puts res['Location']
