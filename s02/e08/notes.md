@@ -82,6 +82,8 @@ end
 
 ## Preview
 
+spec/mailers/previews/notify_mailer_preview.rb
+
 ```ruby
 class NotifyMailerPreview < ActionMailer::Preview
   def user_deadlines
