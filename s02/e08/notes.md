@@ -23,7 +23,7 @@ def user_deadlines(email, events)
 end
 ```
 
-with locales:
+## i18n
 
 ```yaml
 ru:
@@ -42,3 +42,54 @@ def user_deadlines(email, events)
   )
 end
 ```
+
+## Attachements
+
+
+```ruby
+class NotifyMailer < ApplicationMailer
+  def user_deadlines(user, events)
+    @events = events
+    attachments['filename.jpg'] = File.read('/path/to/original.jpg')
+    mail(
+      to: email_address_with_name(user.email, user.name),
+      subject: I18n.t('emails.subjects.user_deadlines')
+    )
+  end
+end
+
+```
+
+
+Inline
+
+```ruby
+class NotifyMailer < ApplicationMailer
+  def user_deadlines(user, events)
+    @events = events
+    attachments.inline['filename.jpg'] = File.read('/path/to/original.jpg')
+    mail(
+      to: email_address_with_name(user.email, user.name),
+      subject: I18n.t('emails.subjects.user_deadlines')
+    )
+  end
+end
+```
+
+```erb
+<%= image_tag attachments['filename.jpg'].url %>
+```
+
+## Preview
+
+```ruby
+class NotifyMailerPreview < ActionMailer::Preview
+  def user_deadlines
+    user = User.first
+    NotifyMailer.user_deadlines(user, user.events)
+  end
+end
+```
+
+http://localhost:3000/rails/mailers
+ 
